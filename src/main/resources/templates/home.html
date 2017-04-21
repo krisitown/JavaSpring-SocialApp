@@ -11,6 +11,11 @@
 </header>
 <main>
     <h1 class="h1">Welcome to SocialApp</h1>
+
+    <form action="/posts/new" method="post">
+        <textarea th:name="content"></textarea>
+        <input type="submit" value="Post" />
+    </form>
 </main>
 <script th:src="@{jquery/jquery.min.js}"></script>
 <script th:src="@{bootstrap/js/bootstrap.min.js}"></script>

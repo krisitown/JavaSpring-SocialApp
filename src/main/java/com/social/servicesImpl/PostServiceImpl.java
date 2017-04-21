@@ -23,4 +23,9 @@ public class PostServiceImpl implements PostService {
         post.setAuthor(currentUser);
         postRepository.save(post);
     }
+
+    @Override
+    public Iterable<Post> index() {
+        return postRepository.findAll();
+    }
 }
