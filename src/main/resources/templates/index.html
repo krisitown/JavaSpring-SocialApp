@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SocialApp</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<header th:replace="fragments/parts::menu">
+</header>
+<main>
+    <div style="padding-bottom: 23px;" th:each="post : ${posts}" >
+        <div th:text="${post.username}"></div>
+        <div th:text="${post.content}"></div>
+    </div>
+</main>
+</body>
+</html>

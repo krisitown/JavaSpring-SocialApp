@@ -3,11 +3,15 @@ package com.social.servicesImpl;
 import com.social.entities.Post;
 import com.social.entities.User;
 import com.social.models.bindingModels.PostCreationModel;
+import com.social.models.viewModels.PostViewModel;
 import com.social.repositories.PostRepository;
 import com.social.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -25,7 +29,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> index() {
-        return postRepository.findAll();
+    public List<PostViewModel> index() {
+        Iterable<Post> posts = postRepository.findAll();
+        List<PostViewModel> postViews = new ArrayList<>();
+        for(Post post : posts) {
+            PostViewModel postViewModel = new PostViewModel();
+            postViewModel.setContent(post.getContent());
+            postViewModel.setUsername(post.getAuthor().getUsername());
+            postViews.add(postViewModel);
+        }
+        return postViews;
     }
 }
