@@ -25,7 +25,7 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/posts/new")
-    public String createPost(@Valid @ModelAttribute PostCreationModel postModel, HttpSession session, BindingResult bindingResult){
+    public String createPost(@Valid @ModelAttribute PostCreationModel postModel){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         postService.create(postModel, currentUser);
         return "redirect:/";

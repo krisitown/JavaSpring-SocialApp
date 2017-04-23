@@ -36,6 +36,7 @@ public class PostServiceImpl implements PostService {
             PostViewModel postViewModel = new PostViewModel();
             postViewModel.setContent(post.getContent());
             postViewModel.setUsername(post.getAuthor().getUsername());
+            postViewModel.setId(post.getId());
             postViews.add(postViewModel);
         }
         return postViews;
