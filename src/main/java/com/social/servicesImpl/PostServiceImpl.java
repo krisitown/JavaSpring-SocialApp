@@ -4,7 +4,9 @@ import com.social.entities.Post;
 import com.social.entities.User;
 import com.social.models.bindingModels.PostCreationModel;
 import com.social.models.viewModels.PostViewModel;
+import com.social.repositories.CommentRepository;
 import com.social.repositories.PostRepository;
+import com.social.services.CommentService;
 import com.social.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -37,6 +42,7 @@ public class PostServiceImpl implements PostService {
             postViewModel.setContent(post.getContent());
             postViewModel.setUsername(post.getAuthor().getUsername());
             postViewModel.setId(post.getId());
+            postViewModel.setComments(commentService.getCommentsOfPost(post));
             postViews.add(postViewModel);
         }
         return postViews;

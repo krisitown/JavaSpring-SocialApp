@@ -13,6 +13,10 @@
     <div style="padding-bottom: 23px;" th:each="post : ${posts}">
         <div th:text="${post.username}"></div>
         <div th:text="${post.content}"></div>
+        <div th:each="comment : ${post.comments}">
+            <div th:text="${comment.username}"></div>
+            <div th:text="${comment.content}"></div>
+        </div>
         <form action="/comments/new" method="post">
             <input type="hidden" name="originPostId" th:value="${post.id}" />
             <input type="text" name="content" />
