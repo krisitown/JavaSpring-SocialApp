@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="friendlist">
+    <div class="col-md-3 friends_list" th:each="friend : ${friends}">
+        <div th:text="${friend.username}"></div>
+    </div>
+</div>
+</body>
+</html>

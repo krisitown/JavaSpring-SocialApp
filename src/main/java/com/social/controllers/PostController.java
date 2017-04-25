@@ -4,8 +4,11 @@ import com.social.entities.Post;
 import com.social.entities.User;
 import com.social.models.bindingModels.PostCreationModel;
 import com.social.models.viewModels.PostViewModel;
+import com.social.models.viewModels.UserInFriendListViewModel;
+import com.social.services.BasicUserService;
 import com.social.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private BasicUserService userService;
+
     @PostMapping("/posts/new")
     public String createPost(@Valid @ModelAttribute PostCreationModel postModel){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -33,8 +39,11 @@ public class PostController {
 
     @GetMapping("/posts")
     public ModelAndView index(){
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<PostViewModel> posts = postService.index();
+        List<UserInFriendListViewModel> friends = userService.getFriendList(currentUser);
         ModelAndView mav = new ModelAndView("index");
+        mav.addObject("friends", friends);
         mav.addObject("posts", posts);
         return mav;
     }
