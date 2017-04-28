@@ -3,9 +3,9 @@ package com.social.models.bindingModels;
 public class MessageCreationModel {
     private String content;
 
-    private long senderId;
+    private long sender;
 
-    private long receiverId;
+    private long receiver;
 
     public String getContent() {
         return content;
@@ -15,19 +15,19 @@ public class MessageCreationModel {
         this.content = content;
     }
 
-    public long getSenderId() {
-        return senderId;
+    public long getSender() {
+        return sender;
     }
 
-    public void setSenderId(long senderId) {
-        this.senderId = senderId;
+    public void setSender(long senderId) {
+        this.sender = senderId;
     }
 
-    public long getReceiverId() {
-        return receiverId;
+    public long getReceiver() {
+        return receiver;
     }
 
-    public void setReceiverId(long receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiver(long receiverId) {
+        this.receiver = receiverId;
     }
 }

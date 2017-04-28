@@ -25,7 +25,7 @@ public class MessageServiceImpl implements MessageService {
     public void send(MessageCreationModel messageModel, User currentUser) {
         Message message = modelMapper.map(messageModel, Message.class);
         message.setSender(currentUser);
-        message.setReceiver(userRepository.findOne(messageModel.getReceiverId()));
+        message.setReceiver(userRepository.findOne(messageModel.getReceiver()));
         messageRepository.save(message);
     }
 }

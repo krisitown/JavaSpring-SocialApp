@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-    <div th:fragment="chatarea">
+    <div id="chat" th:fragment="chatArea">
+        <div id="chatAreaUsername"></div>
+        <div id="receivedMessages"></div>
+        <input type="text" id="messageBox" />
+        <script>
+            $(document).ready(function(){
+                var receiverId;
+                var senderId = /*[['${currentUser.id}']]*/ 0;
+                $('#messageBox').on('keypress', function(event){
+                    if(event.keyCode == 13){
+                        var content = $('#messageBox').val();
+                        $.ajax({
+                            type: 'POST',
+                            url: '/messages/new',
+                            data: {
+                                receiver: receiverId,
+                                sender: senderId,
+                                content: content
+                            },
+                            success: function(){
+                                $('#messageBox').val('');
+                            }
+                        });
+                    }
+                });
+            });
+
+        </script>
     </div>
+
+    <script th:src="@{jquery/jquery.min.js}"></script>
+    <script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+
+    <!-- chat box script -->
+
+
+
 </body>
 </html>

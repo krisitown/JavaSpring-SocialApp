@@ -2,12 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Title</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
 <div th:fragment="friendlist">
-    <div class="col-md-3 friends_list" th:each="friend : ${friends}">
-        <div th:text="${friend.username}"></div>
+    <div class="col-md-3 friends_list" th:each="friend, iter : ${friends}">
+        <div th:onclick="'selectUserToChat(' + ${friend.id} + ', ' + ${friend.username} + ');'" th:text="${friend.username}"></div>
+        <script>
+            $(document).ready(function(){
+                function selectUserToChat(id, username) {
+                    var receiverId = parseInt(id);
+                    var receiverUsername = username;
+                    $('#chatAreaUsername').innerHTML(username);
+                }
+            });
+
+        </script>
     </div>
 </div>
+
+<script th:src="@{jquery/jquery.min.js}"></script>
+<script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+
+
+
 </body>
 </html>
