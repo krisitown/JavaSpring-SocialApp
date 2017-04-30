@@ -13,7 +13,6 @@
         <input type="text" id="messageBox" />
         <script>
             $(document).ready(function(){
-                var senderId = /*[['${currentUser.id}']]*/ 0;
                 $('#messageBox').on('keypress', function(event){
                     if(event.keyCode == 13){
                         var content = $('#messageBox').val();
@@ -30,6 +29,22 @@
                         });
                     }
                 });
+                function updateMessages() {
+                    $('#receivedMessages').html('');
+                    $.ajax({
+                        type: 'GET',
+                        url: '/messages/' + receiverId,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        success: function(data) {
+                            data.forEach(function(item) {
+                               $('#receivedMessages').html($('#receivedMessages').html() + item.content);
+                            });
+                        }
+                    });
+                }
+
+                setInterval(updateMessages, 2500);
             });
 
         </script>
