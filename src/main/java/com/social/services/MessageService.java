@@ -9,5 +9,5 @@ import java.util.List;
 public interface MessageService {
     void send(MessageCreationModel messageModel, User currentUser);
 
-    List<MessageViewModel> getMessagesBetween(User userOne, User userTwo);
+    List<MessageViewModel> getMessagesBetween(User userOne, User userTwo, String lastMessage);
 }

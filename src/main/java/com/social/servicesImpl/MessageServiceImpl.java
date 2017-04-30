@@ -9,9 +9,11 @@ import com.social.repositories.MessageRepository;
 import com.social.services.MessageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -34,13 +36,21 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<MessageViewModel> getMessagesBetween(User userOne, User userTwo) {
-        List<Message> messages = messageRepository.getMessagesBetweenUsers(userOne.getId(), userTwo.getId());
+    public List<MessageViewModel> getMessagesBetween(User userOne, User userTwo, String lastMessage) {
+        if(!lastMessage.isEmpty()){
+            int i = 31;
+        }
+        List<Message> messages = messageRepository.getMessagesBetweenUsers(userOne.getId(), userTwo.getId(),
+                new PageRequest(0, 30));
         List<MessageViewModel> messageViewModels = new ArrayList<>();
         for (Message message : messages) {
+            if(message.getContent().equals(lastMessage)){
+                break;
+            }
             MessageViewModel messageModel = modelMapper.map(message, MessageViewModel.class);
             messageViewModels.add(messageModel);
         }
+        Collections.reverse(messageViewModels);
         return messageViewModels;
     }
 }

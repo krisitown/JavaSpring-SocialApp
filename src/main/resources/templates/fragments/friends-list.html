@@ -8,15 +8,15 @@
 </head>
 <body>
 <div th:fragment="friendlist">
-    <div class="col-md-3 friends_list" th:each="friend, iter : ${friends}">
+    <h3>Friends List:</h3>
+    <div class="friends_list" th:each="friend, iter : ${friends}">
         <div th:onclick="'selectUserToChat(' + ${friend.id} + ', ' + '\'' + ${friend.username} + '\'' + ');'" th:text="${friend.username}"></div>
         <script>
-
                 function selectUserToChat(id, username) {
                     receiverId = parseInt(id);
                     $('#chatAreaUsername').html(username);
+                    $('#receivedMessages').html('');
                 }
-
         </script>
     </div>
 </div>

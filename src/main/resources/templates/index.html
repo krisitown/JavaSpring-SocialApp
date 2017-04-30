@@ -11,26 +11,28 @@
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 <header th:replace="fragments/parts::menu">
 </header>
-<main>
-    <div th:replace="fragments/chat-area::chatArea"></div>
-
-    <div style="padding-bottom: 23px;" th:each="post : ${posts}">
-        <div th:text="${post.username}"></div>
-        <div th:text="${post.content}"></div>
-        <div th:each="comment : ${post.comments}">
-            <div th:text="${comment.username}"></div>
-            <div th:text="${comment.content}"></div>
+<main class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-3" th:replace="fragments/chat-area::chatArea"></div>
+    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+        <div style="padding-bottom: 23px;" th:each="post : ${posts}">
+            <div th:text="${post.username}"></div>
+            <div th:text="${post.content}"></div>
+            <div th:each="comment : ${post.comments}">
+                <div th:text="${comment.username}"></div>
+                <div th:text="${comment.content}"></div>
+            </div>
+            <form action="/comments/new" method="post">
+                <input type="hidden" name="originPostId" th:value="${post.id}" />
+                <input type="text" name="content" />
+                <input type="submit" value="Post Comment" />
+            </form>
         </div>
-        <form action="/comments/new" method="post">
-            <input type="hidden" name="originPostId" th:value="${post.id}" />
-            <input type="text" name="content" />
-            <input type="submit" value="Post Comment" />
-        </form>
     </div>
+
 
     <!-- friends list -->
 
-    <div th:replace="fragments/friends-list::friendlist"></div>
+    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-3" th:replace="fragments/friends-list::friendlist"></div>
 
     <!-- friends list -->
 </main>

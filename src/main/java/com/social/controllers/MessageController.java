@@ -31,10 +31,12 @@ public class MessageController {
         return "redirect:/"; //todo: change this concerning JSON
     }
 
-    @GetMapping("/messages/{id}")
-    public ResponseEntity<List<MessageViewModel>> getMessagesWith(@PathVariable("id") long userId){
+    @PostMapping("/messages")
+    public ResponseEntity<List<MessageViewModel>> getMessagesWith(@RequestParam("receiverId") long userId,
+                                                                  @RequestParam("lastMessage") String lastMessage){
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<MessageViewModel> messages = messageService.getMessagesBetween(currentUser, (User)userRepository.findOne(userId));
+        List<MessageViewModel> messages = messageService.getMessagesBetween(currentUser, (User)userRepository.findOne(userId),
+                lastMessage);
         return new ResponseEntity(messages, HttpStatus.OK);
     }
 }

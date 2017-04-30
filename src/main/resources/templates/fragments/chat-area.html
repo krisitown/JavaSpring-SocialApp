@@ -7,8 +7,8 @@
           th:href="@{bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-    <div id="chat" th:fragment="chatArea">
-        <div id="chatAreaUsername"></div>
+    <div id="chat" class="col-xs-12 col-sm-12 col-lg-3 col-md-3" th:fragment="chatArea">
+        <h3 id="chatAreaUsername"></h3>
         <div id="receivedMessages"></div>
         <input type="text" id="messageBox" />
         <script>
@@ -29,17 +29,19 @@
                         });
                     }
                 });
+                var lastMessage = '';
                 function updateMessages() {
-                    $('#receivedMessages').html('');
                     $.ajax({
-                        type: 'GET',
-                        url: '/messages/' + receiverId,
-                        dataType: 'json',
-                        contentType: 'application/json',
+                        type: 'POST',
+                        url: '/messages',
+                        data: { lastMessage: lastMessage, receiverId: receiverId },
                         success: function(data) {
                             data.forEach(function(item) {
-                               $('#receivedMessages').html($('#receivedMessages').html() + item.content);
+                               $('#receivedMessages').html($('#receivedMessages').html() + "<div>" + item.content + "</div>");
                             });
+                            if(data.length != 0){
+                                lastMessage = data[data.length - 1].content;
+                            }
                         }
                     });
                 }
