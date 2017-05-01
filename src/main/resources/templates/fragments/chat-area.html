@@ -10,9 +10,10 @@
     <div id="chat" class="col-xs-12 col-sm-12 col-lg-3 col-md-3" th:fragment="chatArea">
         <h3 id="chatAreaUsername"></h3>
         <div id="receivedMessages"></div>
-        <input type="text" id="messageBox" />
+
         <script>
             $(document).ready(function(){
+                receiverId = -1;
                 $('#messageBox').on('keypress', function(event){
                     if(event.keyCode == 13){
                         var content = $('#messageBox').val();
@@ -31,19 +32,23 @@
                 });
                 var lastMessage = '';
                 function updateMessages() {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/messages',
-                        data: { lastMessage: lastMessage, receiverId: receiverId },
-                        success: function(data) {
-                            data.forEach(function(item) {
-                               $('#receivedMessages').html($('#receivedMessages').html() + "<div>" + item.content + "</div>");
-                            });
-                            if(data.length != 0){
-                                lastMessage = data[data.length - 1].content;
+                    if(receiverId != -1){
+                        $.ajax({
+                            type: 'POST',
+                            url: '/messages',
+                            data: { lastMessage: lastMessage, receiverId: receiverId },
+                            success: function(data) {
+                                data.forEach(function(item) {
+                                    $('#receivedMessages').html($('#receivedMessages').html() + "<div>" +
+                                        item.name + ": " + item.content + "</div>");
+                                });
+                                if(data.length != 0){
+                                    lastMessage = data[data.length - 1].content;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+
                 }
 
                 setInterval(updateMessages, 2500);

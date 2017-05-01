@@ -37,9 +37,6 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageViewModel> getMessagesBetween(User userOne, User userTwo, String lastMessage) {
-        if(!lastMessage.isEmpty()){
-            int i = 31;
-        }
         List<Message> messages = messageRepository.getMessagesBetweenUsers(userOne.getId(), userTwo.getId(),
                 new PageRequest(0, 30));
         List<MessageViewModel> messageViewModels = new ArrayList<>();
@@ -48,6 +45,7 @@ public class MessageServiceImpl implements MessageService {
                 break;
             }
             MessageViewModel messageModel = modelMapper.map(message, MessageViewModel.class);
+            messageModel.setName(message.getSender().getUsername());
             messageViewModels.add(messageModel);
         }
         Collections.reverse(messageViewModels);
