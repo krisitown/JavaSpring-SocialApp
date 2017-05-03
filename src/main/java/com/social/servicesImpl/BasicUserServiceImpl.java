@@ -5,6 +5,7 @@ import com.social.entities.User;
 import com.social.errors.Errors;
 import com.social.models.bindingModels.RegistrationModel;
 import com.social.models.viewModels.UserInFriendListViewModel;
+import com.social.models.viewModels.UserViewModel;
 import com.social.repositories.BasicUserRepository;
 import com.social.repositories.UserRepository;
 import com.social.services.BasicUserService;
@@ -62,6 +63,18 @@ public class BasicUserServiceImpl implements BasicUserService {
     }
 
     @Override
+    public List<UserViewModel> getUsers(User currentUser) {
+        Iterable<BasicUser> users = userRepository.findAll();
+        List<UserViewModel> userViewModels = new ArrayList<>();
+        for (BasicUser user : users) {
+            UserViewModel userViewModel = modelMapper.map(user, UserViewModel.class);
+            userViewModel.setIsFriendsWith(areFriends(user, currentUser));
+            userViewModels.add(userViewModel);
+        }
+        return userViewModels;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findOneByUsername(username);
         if(user == null){
@@ -71,5 +84,12 @@ public class BasicUserServiceImpl implements BasicUserService {
         return user;
     }
 
+    private boolean areFriends(User userOne, User userTwo){
+        List<Long> friendIds = new ArrayList<>();
+        for (User user : userOne.getFriends()) {
+            friendIds.add(user.getId());
+        }
+        return friendIds.contains(userTwo.getId()) || userOne.getId() == userTwo.getId();
+    }
 
 }

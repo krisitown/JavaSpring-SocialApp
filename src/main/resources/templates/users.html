@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SocialApp</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/css/posts.css" th:href="@{/css/posts.css}" />
+</head>
+<body>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<header th:replace="fragments/parts::menu">
+</header>
+<main class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-3" th:replace="fragments/chat-area::chatArea"></div>
+
+    <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6">
+        <div th:each="user : ${users}">
+            <div th:text="${user.username}"></div>
+            <div th:unless="${user.isFriendsWith}">
+                <form action="/send_request" method="post">
+                    <input type="hidden" th:value="${user.id}" name="userId" />
+                    <input type="submit" value="Send Request" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- friends list -->
+
+    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-3" th:replace="fragments/friends-list::friendlist"></div>
+
+    <!-- friends list -->
+</main>
+
+</body>
+</html>

@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface BasicUserRepository extends UserRepository<BasicUser> {
-    @Query("SELECT u FROM User as u JOIN FETCH u.friends WHERE u.id = (:userId)")
-    User getUserAndFetchFriends(@Param("userId") long id);
+    User findOne(long id);
 }
