@@ -5,6 +5,7 @@
     <title>SocialApp</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
           th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}" />
     <link rel="stylesheet" href="../static/css/posts.css" th:href="@{/css/posts.css}" />
 </head>
 <body>
@@ -30,7 +31,7 @@
             <form action="/comments/new" method="post">
                 <div class="comment_box">
                     <input type="text" name="content" />
-                    <input type="submit" value="Post Comment" />
+                    <input class="btn btn-primary" type="submit" value="Post Comment" />
                 </div>
                 <input type="hidden" name="originPostId" th:value="${post.id}" />
             </form>

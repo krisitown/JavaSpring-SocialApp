@@ -24,11 +24,9 @@ import java.util.List;
 
 @Controller
 public class PostController {
-    @Autowired
-    private PostService postService;
 
     @Autowired
-    private BasicUserService userService;
+    private PostService postService;
 
     @PostMapping("/posts/new")
     public String createPost(@Valid @ModelAttribute PostCreationModel postModel){
@@ -39,11 +37,8 @@ public class PostController {
 
     @GetMapping("/posts")
     public ModelAndView index(){
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<PostViewModel> posts = postService.index();
-        List<UserInFriendListViewModel> friends = userService.getFriendList(currentUser);
         ModelAndView mav = new ModelAndView("index");
-        mav.addObject("friends", friends);
         mav.addObject("posts", posts);
         return mav;
     }

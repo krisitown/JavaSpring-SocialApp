@@ -1,0 +1,15 @@
+.user {
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid black;
+    background: white;
+}
+
+.user_username {
+    display: inline;
+    width: 65%;
+}
+
+.user_request_btn {
+    float: right;
+}

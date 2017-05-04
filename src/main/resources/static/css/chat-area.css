@@ -1,0 +1,21 @@
+div:empty { display: none }
+
+#chatAreaUsername{
+    margin-left: 12px;
+    margin-top: 8px;
+}
+
+#receivedMessages {
+    background: white;
+    border: 1px solid black;
+    overflow: auto;
+    height: 200px;
+    width: 100%;
+    margin: 12px;
+    padding: 8px;
+}
+
+#messageBox {
+    margin-left: 12px;
+    width: 100%;
+}

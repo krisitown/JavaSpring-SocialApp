@@ -8,10 +8,24 @@
 </head>
 <body>
 <div th:fragment="friendlist">
+    <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/friends-list.css}" />
     <h3>Friends List:</h3>
-    <div class="friends_list" th:each="friend, iter : ${friends}">
-        <div th:onclick="'selectUserToChat(' + ${friend.id} + ', ' + '\'' + ${friend.username} + '\'' + ');'" th:text="${friend.username}"></div>
+    <div id="friends-list"></div>
+        <!-- <div th:onclick="'selectUserToChat(' + ${friend.id} + ', ' + '\'' + ${friend.username} + '\'' + ');'" th:text="${friend.username}"></div> -->
         <script>
+                $.ajax({
+                    type: 'GET',
+                    url: '/friends',
+                    success: function(data){
+                        data.forEach(function(item){
+                            //black magic
+                            var divElement = "<div></div>";
+                            $('#friends-list').append(divElement.substr(0, 4) + ' onclick="selectUserToChat(' + item.id + '\,' + ' \'' +
+                                item.username + '\'' + ');" >' + item.username + divElement.substr(5, 10));
+                        });
+                    }
+                });
+
                 function selectUserToChat(id, username) {
                     receiverId = parseInt(id);
                     $('#chatAreaUsername').html(username);
@@ -19,7 +33,6 @@
                     $('#messageBox').attr("type", "text");
                 }
         </script>
-    </div>
 </div>
 
 <script th:src="@{jquery/jquery.min.js}"></script>
