@@ -29,7 +29,10 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/posts/new")
-    public String createPost(@Valid @ModelAttribute PostCreationModel postModel){
+    public String createPost(@Valid @ModelAttribute PostCreationModel postModel, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "index";
+        }
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         postService.create(postModel, currentUser);
         return "redirect:/";

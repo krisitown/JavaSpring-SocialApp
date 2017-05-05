@@ -1,6 +1,9 @@
 package com.social.models.bindingModels;
 
+import javax.validation.constraints.Size;
+
 public class MessageCreationModel {
+    @Size(min = 1, max = 300, message = "Message should be between 1 and 300 characters.")
     private String content;
 
     private long receiver;
